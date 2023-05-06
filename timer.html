@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Timer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .timer {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Timer</h1>
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+    <div class="timer" id="timer">00:00:00</div>
+
+    <script>
+        let timerInterval; // Global variable to hold the interval ID
+
+        function startTimer() {
+            let startTime = new Date().getTime(); // Get the current time
+            timerInterval = setInterval(function () {
+                let currentTime = new Date().getTime(); // Get the current time again
+                let elapsedTime = currentTime - startTime; // Calculate the elapsed time in milliseconds
+                let hours = Math.floor(elapsedTime / 3600000); // Convert milliseconds to hours
+                let minutes = Math.floor((elapsedTime - hours * 3600000) / 60000); // Convert remaining milliseconds to minutes
+                let seconds = Math.floor((elapsedTime - hours * 3600000 - minutes * 60000) / 1000); // Convert remaining milliseconds to seconds
+                let timeString = padNumber(hours) + ":" + padNumber(minutes) + ":" + padNumber(seconds); // Format the time string
+                document.getElementById("timer").innerHTML = timeString; // Update the timer display
+            }, 1000); // Update the timer display every second
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval); // Clear the interval to stop the timer
+        }
+
+        function padNumber(number) {
+            if (number < 10) {
+                return "0" + number; // Add a leading zero for single-digit numbers
+            } else {
+                return number.toString(); // Return the number as a string
+            }
+        }
+    </script>
+</body>
+
+</html>
